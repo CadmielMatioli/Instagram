@@ -9,7 +9,7 @@ export default function Feed(){
     useEffect(() => {
         async function loadFeed(){
             const response = await fetch(
-              'http://localhost:3000/feed?_expand-author&_limit=5&_page=1'  
+              'http://localhost:3000/feed?_expand=author&_limit=5&_page=1'  
             );
             const data = await response.json();
             setfeed(data);
@@ -19,18 +19,29 @@ export default function Feed(){
     return(
         <View>
             <FlatList
+
                 data={feed}
                 keyExtractor={post => String(post.id)}
                 renderItem={({item})=> (
+
                     <Post>
+
                         <Header>
+
                             <Avatar source={{uri:item.author.avatar}}/>
+
                             <Name>{item.author.name}</Name>
+
                         </Header>
-                        <PostImage source={{uri:item.image}}/>
+
+                        <PostImage ratio={item.aspectRatio} source={{uri:item.image}}/>
+
                         <Description>
+
                             <Name>{item.author.name}</Name>{item.description}
+
                         </Description>
+
                     </Post>
                 )}
             />
